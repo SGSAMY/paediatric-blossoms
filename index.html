@@ -256,6 +256,24 @@ footer ul{list-style:none;display:grid;gap:8px}
   .doc-tag{right:-4px}
   .wave{height:44px}
 }
+
+/* Consent + privacy dialog */
+.consent{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;background:var(--sky);border:2px solid #dbe7e5;border-radius:14px;padding:14px 16px;margin:4px 0 18px;font-size:.93rem;cursor:pointer}
+.consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--forest)}
+.consent:has(input:checked){border-color:var(--forest);background:var(--meadow)}
+.linkish{background:none;border:none;padding:0;font:inherit;color:var(--forest);font-weight:700;text-decoration:underline;cursor:pointer}
+footer .linkish{color:#fff}
+dialog.privacy{border:none;border-radius:28px;padding:0;max-width:720px;width:calc(100% - 32px);max-height:88vh;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog.privacy::backdrop{background:rgba(10,58,62,.6)}
+.privacy-head{position:sticky;top:0;background:var(--forest);color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.privacy-head h2{color:#fff;font-size:1.6rem;margin:0}
+.privacy-close{background:var(--sun);color:var(--forest);border:none;border-radius:999px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}
+.privacy-body{padding:24px 28px 30px;overflow:auto;font-size:.97rem}
+.privacy-body h3{font-size:1.12rem;margin:22px 0 6px}
+.privacy-body p,.privacy-body li{color:#33504f;margin-bottom:8px}
+.privacy-body ul{padding-left:20px}
+.privacy-body .todo{background:var(--sun-soft);border-radius:6px;padding:0 6px;font-weight:700;color:#7a5a00}
+@media (max-width:640px){.privacy-head,.privacy-body{padding-left:18px;padding-right:18px}}
 </style>
 </head>
 <body>
@@ -477,6 +495,8 @@ footer ul{list-style:none;display:grid;gap:8px}
           <div class="field"><label for="gp">GP name and surgery <i>*</i></label><input id="gp" name="GP & surgery" required></div>
           <div class="field"><label for="msg">What would you like help with? <i>*</i></label><textarea id="msg" name="Message" maxlength="180" required placeholder="Please give as much detail as you can"></textarea><div class="counter"><span id="count">0</span> / 180</div></div>
         </fieldset>
+        <label class="consent"><input type="checkbox" id="consent" name="Consent" value="Agreed to privacy notice" required>
+          <span>I agree to Paediatric Blossoms using these details, including information about my child’s health, to arrange their appointment, as explained in the <button type="button" class="linkish" data-privacy>privacy notice</button>. <i style="color:var(--petal-deep);font-style:normal">*</i></span></label>
         <button class="btn btn-forest" type="submit">Send booking request</button>
         <div class="form-msg" id="formMsg" role="status"></div>
       </form>
@@ -495,7 +515,7 @@ footer ul{list-style:none;display:grid;gap:8px}
     </div>
     <div>
       <h4>On this page</h4>
-      <ul><li><a href="#about">About Dr Krishnan</a></li><li><a href="#cardiology">Heart care</a></li><li><a href="#conditions">Conditions</a></li><li><a href="#visit">Find us</a></li><li><a href="#book">Book an appointment</a></li></ul>
+      <ul><li><a href="#about">About Dr Krishnan</a></li><li><a href="#cardiology">Heart care</a></li><li><a href="#conditions">Conditions</a></li><li><a href="#visit">Find us</a></li><li><a href="#book">Book an appointment</a></li><li><button type="button" class="linkish" data-privacy>Privacy notice</button></li></ul>
     </div>
     <div>
       <h4>Contact</h4>
@@ -504,6 +524,52 @@ footer ul{list-style:none;display:grid;gap:8px}
   </div>
   <div class="foot-bottom"><span>© <span id="yr"></span> Paediatric Blossoms, Evergreen Blossoms Ltd Group</span><span>Dr Sathish Krishnan, Consultant Paediatrician</span></div>
 </div></footer>
+
+
+<dialog class="privacy" id="privacyDialog" aria-labelledby="privacy-title">
+  <div class="privacy-head"><h2 id="privacy-title">Privacy notice</h2><button type="button" class="privacy-close" id="privacyClose">Close</button></div>
+  <div class="privacy-body">
+    <p>This notice explains how Paediatric Blossoms uses the information you send us through the booking form on this website.</p>
+
+    <h3>Who we are</h3>
+    <p>Paediatric Blossoms is the private paediatric practice of Dr Sathish Krishnan, part of Evergreen Blossoms Ltd. We are the data controller for the information you give us. You can contact us at <a href="mailto:paediatricblossoms@gmail.com">paediatricblossoms@gmail.com</a> or on 07733 907976.</p>
+    <p>ICO registration number: <span class="todo">[to be added]</span></p>
+
+    <h3>What we collect</h3>
+    <ul>
+      <li>Your name, email address and phone number</li>
+      <li>How you will pay, and your insurer, membership number and pre-authorisation code if you use insurance</li>
+      <li>Your child’s name, date of birth and home address</li>
+      <li>Your child’s GP and surgery</li>
+      <li>What you would like help with, which may include information about your child’s health</li>
+    </ul>
+
+    <h3>Why we use it</h3>
+    <p>We use these details to contact you, arrange your child’s appointment and prepare for the consultation. Information about your child’s health is special category data, and we only use it to provide healthcare.</p>
+    <p>Under UK data protection law, our lawful bases are taking steps at your request before providing care (Article 6(1)(b) UK GDPR) and the provision of health care (Article 9(2)(h) UK GDPR).</p>
+
+    <h3>Who we share it with</h3>
+    <ul>
+      <li><b>Netlify</b>, which hosts this website, stores booking requests and sends them to us by email. Netlify is based in the United States, so your details may be processed outside the UK, with the safeguards UK law requires.</li>
+      <li><b>Google</b>, which provides the practice’s email service.</li>
+      <li><b>Your insurer</b>, if you choose to pay through insurance.</li>
+      <li><b>Your child’s GP</b> and other healthcare professionals involved in their care, where this is part of their treatment.</li>
+    </ul>
+    <p>We never sell your information or use it for marketing.</p>
+
+    <h3>How long we keep it</h3>
+    <p>Booking requests are deleted from the website system once an appointment has been arranged, and in any case within <span class="todo">[3 months]</span>. If your child becomes a patient, their medical records are kept for the periods recommended for children’s health records in the UK.</p>
+
+    <h3>Your rights</h3>
+    <p>You can ask to see the information we hold, ask us to correct or delete it, ask us to limit how we use it, or object to how we use it. To do any of these, email us at the address above.</p>
+    <p>If you are unhappy with how we have handled your information, you can complain to the Information Commissioner’s Office at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk</a> or on 0303 123 1113.</p>
+
+    <h3>Urgent medical help</h3>
+    <p>The booking form is not monitored around the clock. If your child is seriously unwell, call 999 or go to your nearest A&amp;E. For urgent advice, call NHS 111.</p>
+
+    <p style="margin-top:22px;font-size:.88rem">Last updated: <span class="todo">[date]</span></p>
+  </div>
+</dialog>
 
 <a class="wa-float" href="https://wa.me/447733907976" target="_blank" rel="noopener" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></a>
 
@@ -523,6 +589,15 @@ document.querySelectorAll('input[name="Funding"]').forEach(r => r.addEventListen
 }));
 const msg = document.getElementById('msg');
 msg.addEventListener('input', () => document.getElementById('count').textContent = msg.value.length);
+
+// Privacy notice dialog
+const pd = document.getElementById('privacyDialog');
+document.querySelectorAll('[data-privacy]').forEach(b => b.addEventListener('click', e => {
+  e.preventDefault();
+  if (pd.showModal) pd.showModal(); else pd.setAttribute('open', '');
+}));
+document.getElementById('privacyClose').addEventListener('click', () => pd.close ? pd.close() : pd.removeAttribute('open'));
+pd.addEventListener('click', e => { if (e.target === pd) pd.close(); });
 
 document.getElementById('bookingForm').addEventListener('submit', async e => {
   e.preventDefault();
