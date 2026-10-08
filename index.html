@@ -444,7 +444,9 @@ footer ul{list-style:none;display:grid;gap:8px}
         <a href="mailto:paediatricblossoms@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email us</a>
         <p class="note"><b style="color:#fff">Using insurance?</b> Please include your insurer, membership number and pre-authorisation code.</p>
       </div>
-      <form id="bookingForm" novalidate>
+      <form id="bookingForm" name="booking" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+        <input type="hidden" name="form-name" value="booking">
+        <p hidden><label>Leave this empty <input name="company"></label></p>
         <fieldset>
           <legend>Parent or guardian</legend>
           <div class="field"><label for="pname">Full name <i>*</i></label><input id="pname" name="Parent/Guardian name" required autocomplete="name"></div>
@@ -522,16 +524,31 @@ document.querySelectorAll('input[name="Funding"]').forEach(r => r.addEventListen
 const msg = document.getElementById('msg');
 msg.addEventListener('input', () => document.getElementById('count').textContent = msg.value.length);
 
-document.getElementById('bookingForm').addEventListener('submit', e => {
+document.getElementById('bookingForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const f = e.target, out = document.getElementById('formMsg');
+  const f = e.target, out = document.getElementById('formMsg'), btn = f.querySelector('button[type=submit]');
   if (!f.checkValidity()) { f.reportValidity(); return; }
-  const lines = [];
-  new FormData(f).forEach((v, k) => { if (v) lines.push(k + ': ' + v); });
-  const subject = 'Appointment request: ' + (f.querySelector('#cfirst').value || 'new patient');
-  window.location.href = 'mailto:paediatricblossoms@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
-  out.style.display = 'block';
-  out.textContent = 'Your email app should open with your request ready. Press send to finish. If nothing opens, call or WhatsApp 07733 907976.';
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const data = new FormData(f);
+  try {
+    // Netlify Forms: stores the request and emails the practice
+    const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() });
+    if (!res.ok) throw new Error(res.status);
+    f.reset();
+    document.getElementById('count').textContent = '0';
+    document.getElementById('insuranceField').classList.remove('show');
+    out.style.display = 'block';
+    out.textContent = 'Thank you, your booking request has been sent. We’ll be in touch to arrange a time. For anything urgent, call or WhatsApp 07733 907976.';
+  } catch (err) {
+    // Fallback when the page isn't hosted on Netlify (e.g. GitHub Pages or a saved file)
+    const lines = [];
+    data.forEach((v, k) => { if (v && k !== 'form-name' && k !== 'company') lines.push(k + ': ' + v); });
+    const subject = 'Appointment request: ' + (f.querySelector('#cfirst').value || 'new patient');
+    window.location.href = 'mailto:paediatricblossoms@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+    out.style.display = 'block';
+    out.textContent = 'Your email app should open with your request ready. Press send to finish. If nothing opens, call or WhatsApp 07733 907976.';
+  }
+  btn.disabled = false; btn.textContent = 'Send booking request';
 });
 </script>
 </body>
