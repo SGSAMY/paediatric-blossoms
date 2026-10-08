@@ -285,6 +285,18 @@ footer ul{list-style:none;display:grid;gap:8px;font-size:.93rem}
 .glance-tags span{font-size:.8rem;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.1);color:#e7eef5}
 @media (max-width:1000px){.about-card{order:2}}
 @media (max-width:640px){.about-card{padding:28px}.about-quote{font-size:1.3rem}.glance{grid-template-columns:1fr 1fr 1fr;gap:8px}.glance b{font-size:1.5rem}}
+
+/* About: bio + training panel */
+.about .wrap{grid-template-columns:1.15fr .85fr !important;gap:64px !important;align-items:center !important}
+.cv{background:#fff;border:1px solid var(--line);border-radius:24px;padding:36px;box-shadow:var(--shadow)}
+.cv h3{font-size:1.35rem;margin-bottom:8px}
+.cv dl{margin-bottom:26px}
+.cv dl div{padding:16px 0;border-bottom:1px solid var(--line)}
+.cv dl div:last-child{border-bottom:none}
+.cv dt{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.cv dd{color:var(--navy);font-weight:500}
+@media (max-width:1000px){.about .wrap{grid-template-columns:1fr !important;gap:36px !important}}
+@media (max-width:640px){.cv{padding:24px}}
 </style>
 </head>
 <body>
@@ -385,29 +397,22 @@ footer ul{list-style:none;display:grid;gap:8px;font-size:.93rem}
 
 <section class="section about" id="about">
   <div class="wrap">
-    <aside class="about-card reveal">
-      <svg class="qmark" viewBox="0 0 48 48" fill="currentColor"><path d="M10 34c-3 0-5-2.4-5-6 0-7 4.5-13 12-16l1.6 2.6C13.5 17 11 20.3 11 23.5c2.8 0 5 2.2 5 5.2S13.5 34 10 34zm22 0c-3 0-5-2.4-5-6 0-7 4.5-13 12-16l1.6 2.6C35.5 17 33 20.3 33 23.5c2.8 0 5 2.2 5 5.2S35.5 34 32 34z"/></svg>
-      <p class="about-quote">We take time to listen, explain clearly and work in partnership with families.</p>
-      <div class="about-sign"><b>Dr Sathish Krishnan</b><span>Consultant Paediatrician</span></div>
-      <ul class="glance">
-        <li><b>9+</b><span>years as an NHS consultant</span></li>
-        <li><b>~20</b><span>years in paediatrics</span></li>
-        <li><b>2017</b><span>CCT, London / KSS deanery</span></li>
-      </ul>
-      <div class="glance-tags"><span>General Paediatrics</span><span>Cardiology</span><span>Echocardiography</span><span>Neonates</span></div>
-    </aside>
     <div class="about-text reveal">
       <span class="eyebrow">Meet your paediatrician</span>
       <h2>Dr Sathish Krishnan</h2>
-      <p>Dr Sathish Krishnan is a highly experienced Consultant Paediatrician at Frimley Park Hospital, with over nine years of consultant-level practice and a specialist interest in paediatric cardiology. He provides dedicated neonatal and paediatric echocardiography services alongside general paediatrics, and has extensive expertise across neonatology, paediatric intensive care and acute paediatric medicine.</p>
-      <p>He completed his paediatric training in the London/KSS deanery, obtaining his CCT in 2017. With almost 20 years of paediatric experience, he manages both common and specialist conditions in babies, children and teenagers.</p>
-      <div class="creds">
-        <div class="cred"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c3 2.5 9 2.5 12 0v-5.5"/></svg><div><b>CCT in Paediatrics, 2017</b><span>London / KSS deanery</span></div></div>
-        <div class="cred"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 11v5M9.5 13.5h5"/></svg><div><b>Consultant, Frimley Park</b><span>9+ years NHS consultant</span></div></div>
-        <div class="cred"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><div><b>Echocardiography</b><span>Neonatal &amp; paediatric</span></div></div>
-        <div class="cred"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg><div><b>Intensive &amp; acute care</b><span>Neonatology, PICU, acute paediatrics</span></div></div>
-      </div>
+      <p>Dr Krishnan has almost 20 years of experience caring for babies, children and teenagers, including more than nine years as an NHS consultant. He sees children with both common and more specialist conditions, and takes the time to make sure families understand what is happening and why.</p>
+      <p>His particular interest is the heart. He provides dedicated neonatal and paediatric echocardiography (heart scan) services, alongside his general paediatric practice.</p>
     </div>
+    <aside class="cv reveal" aria-label="Training and expertise">
+      <h3>Training &amp; expertise</h3>
+      <dl>
+        <div><dt>Current role</dt><dd>Consultant Paediatrician, Frimley Park Hospital</dd></div>
+        <div><dt>Training</dt><dd>London / KSS deanery &middot; CCT 2017</dd></div>
+                <div><dt>Wider expertise</dt><dd>Neonatology, paediatric intensive care, acute paediatrics</dd></div>
+      </dl>
+      <a class="btn btn-primary" href="#book">Book a consultation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </aside>
   </div>
 </section>
 
